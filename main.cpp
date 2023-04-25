@@ -1,17 +1,17 @@
 #include <GL/glut.h>
 #include <windows.h>
-//#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <stack>
 #include <utility>
 #include<iostream>
 using namespace std;
 
-int width = 1100;
+int width = 1000;
 int height = 500;
 float br = 0.81;
 float bg = 0.71;
 float bb = 0.65;
-
+float delay = 1;
 void drawEllipse(int a, int b, int xc, int yc) {
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -28,7 +28,7 @@ void drawEllipse(int a, int b, int xc, int yc) {
         glVertex2f(-x + xc, -y + yc);
         glEnd();
         glFlush();
-        Sleep(0.001);
+        Sleep(delay);
         x++;
         dx = dx + (2 * b * b);
         if (d1 < 0) {
@@ -53,7 +53,7 @@ void drawEllipse(int a, int b, int xc, int yc) {
         glVertex2f(-x + xc, -y + yc);
         glEnd();
         glFlush();
-        Sleep(0.001);
+        Sleep(delay);
         y--;
         dy = dy - (2 * a * a);
         if (d2 > 0) {
@@ -94,7 +94,7 @@ void bresenham(int x1, int y1, int x2, int y2) {
                 glVertex2i(x, y);
                 glEnd();
                 glFlush();
-                Sleep(0.001);
+                Sleep(delay);
             }
             else {
                 p = p + dydx2;
@@ -104,7 +104,7 @@ void bresenham(int x1, int y1, int x2, int y2) {
                 glVertex2i(x, y);
                 glEnd();
                 glFlush();
-                Sleep(0.001);
+                Sleep(delay);
             }
         }
     }
@@ -120,7 +120,7 @@ void bresenham(int x1, int y1, int x2, int y2) {
                 glVertex2i(x, y);
                 glEnd();
                 glFlush();
-                Sleep(0.001);
+                Sleep(delay);
             }
             else {
                 p = p + dxdy2;
@@ -130,7 +130,7 @@ void bresenham(int x1, int y1, int x2, int y2) {
                 glVertex2i(x, y);
                 glEnd();
                 glFlush();
-                Sleep(0.001);
+                Sleep(delay);
             }
         }
         glEnd();
@@ -231,7 +231,7 @@ void bresenhamcircle(int xc, int yc, int r) {
         glVertex2i(-y + xc, -x + yc);
         glEnd();
         glFlush();
-        Sleep(0.01);
+        Sleep(delay);
     }
 }
 
@@ -276,13 +276,10 @@ int arrowLevel = 0;
 
 void drawArrow() {
     if (isBlinking) {
-        glColor3f(0.5, 0.5, 0.5);// grey
-    }
-    else {
-        glColor3f(0.56, 0.93, 0.56);//light green 
-    }
-    for (int i = 0; i <= arrowLevel; i++) {
+
+        for (int i = 0; i <= arrowLevel; i++) {
         int x = i * 50;
+        glColor3f(0.5, 0.5, 0.5);// grey
         if (i > 9 && i < 13) continue;
         bresenhamWithouDelay(175 + x, 255, 195 + x, 255);
         bresenhamWithouDelay(195 + x, 255, 195 + x, 257);
@@ -291,27 +288,180 @@ void drawArrow() {
         bresenhamWithouDelay(195 + x, 243, 195 + x, 245);
         bresenhamWithouDelay(195 + x, 245, 175 + x, 245);
         bresenhamWithouDelay(175 + x, 245, 175 + x, 255);
+
+        //heater color change
+        glColor3f(0.8,0.33,0.0);
+        glBegin(GL_POLYGON);
+        glVertex2f(55, 260);
+        glVertex2f(95, 260);
+        glVertex2f(95, 240);
+        glVertex2f(55, 240);
+        glEnd();
+        if (arrowLevel>9){
+            glColor3f(0.0,0.69,0.42);
+            glBegin(GL_POLYGON);
+        glVertex2f(673-2, 297+2);
+        glVertex2f(757+1, 297+2);
+        glVertex2f(757+1, 253-1);
+        glVertex2f(673-2, 253-1);
+        glEnd();
+            glBegin(GL_POLYGON);
+        glVertex2f(670+1, 252-2);
+        glVertex2f(770, 252-2);
+        glVertex2f(770, 202+1);
+        glVertex2f(670+1, 202+1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(761, 302);
+        glVertex2f(758, 252);
+        glVertex2f(820, 265);
+        glVertex2f(820, 315);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(771, 250);
+        glVertex2f(768, 200);
+        glVertex2f(830, 187);
+        glVertex2f(830, 237);
+        glEnd();
+        }
+
     }
+    }
+    else {
+
+        for (int i = 0; i <= arrowLevel; i++) {
+        int x = i * 50;
+        glColor3f(0.56, 0.93, 0.56);//light green
+        if (i > 9 && i < 13) continue;
+        bresenhamWithouDelay(175 + x, 255, 195 + x, 255);
+        bresenhamWithouDelay(195 + x, 255, 195 + x, 257);
+        bresenhamWithouDelay(195 + x, 257, 207 + x, 250);
+        bresenhamWithouDelay(207 + x, 250, 195 + x, 243);
+        bresenhamWithouDelay(195 + x, 243, 195 + x, 245);
+        bresenhamWithouDelay(195 + x, 245, 175 + x, 245);
+        bresenhamWithouDelay(175 + x, 245, 175 + x, 255);
+
+        //heater color change
+        glColor3f(1.0,0.67,0.1);//bright orange
+        glBegin(GL_POLYGON);
+        glVertex2f(55, 260);
+        glVertex2f(95, 260);
+        glVertex2f(95, 240);
+        glVertex2f(55, 240);
+        glEnd();
+        if (arrowLevel>9){
+                glColor3f(0.69,0.42,0.0);
+            glBegin(GL_POLYGON);
+        glVertex2f(673-2, 297+2);
+        glVertex2f(757+1, 297+2);
+        glVertex2f(757+1, 253-1);
+        glVertex2f(673-2, 253-1);
+        glEnd();
+            glBegin(GL_POLYGON);
+        glVertex2f(670+1, 252-2);
+        glVertex2f(770, 252-2);
+        glVertex2f(770, 202+1);
+        glVertex2f(670+1, 202+1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(761, 302);
+        glVertex2f(758, 252);
+        glVertex2f(820, 265);
+        glVertex2f(820, 315);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(771, 250);
+        glVertex2f(768, 200);
+        glVertex2f(830, 187);
+        glVertex2f(830, 237);
+        glEnd();
+        }
+    }
+    }
+
     if (arrowLevel == 9) arrowLevel += 3;
+
+
 }
 
 void drawVerticalArrow() {
     if (isBlinking) {
         glColor3f(0.5, 0.5, 0.5);
+        for (int i = 0; i < 2; i++) {
+            int x = i * 20;
+            bresenhamWithouDelay(478 + x, 205, 485 + x, 217);
+            bresenhamWithouDelay(485 + x, 217, 492 + x, 205);
+            bresenhamWithouDelay(485 + x, 217, 485 + x, 185);
+        }
+        glColor3f(0.0,1.0,1.0);
+        glBegin(GL_POLYGON);
+        glVertex2f(470, 265);
+        glVertex2f(470, 275);
+        glVertex2f(550, 275);
+        glVertex2f(550, 265);
+        glEnd();
+
+         glBegin(GL_POLYGON);
+        glVertex2f(540, 262);
+        glVertex2f(535, 272);
+        glVertex2f(595, 310);
+        glVertex2f(600, 300);
+        glEnd();
+
+         glBegin(GL_POLYGON);
+        glVertex2f(470, 235);
+        glVertex2f(470, 225);
+        glVertex2f(550, 225);
+        glVertex2f(550, 235);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(540, 238);
+        glVertex2f(535, 228);
+        glVertex2f(595, 190);
+        glVertex2f(600, 200);
+        glEnd();
     }
     else {
         glColor3f(0.56, 0.93, 0.56);
-    }
-    for (int i = 0; i < 2; i++) {
-        int x = i * 20;
-        //            bresenhamWithouDelay(480+x,185,480+x,205);
-        //            bresenhamWithouDelay(480+x,205,478+x,205);
-        bresenhamWithouDelay(478 + x, 205, 485 + x, 217);
-        bresenhamWithouDelay(485 + x, 217, 492 + x, 205);
-        bresenhamWithouDelay(485 + x, 217, 485 + x, 185);
-        //            bresenhamWithouDelay(492+x,205,490+x,205);
-        //            bresenhamWithouDelay(490+x,205,490+x,185);
-        //            bresenhamWithouDelay(490+x,185,480+x,185);
+        for (int i = 0; i < 2; i++) {
+            int x = i * 20;
+            bresenhamWithouDelay(478 + x, 205, 485 + x, 217);
+            bresenhamWithouDelay(485 + x, 217, 492 + x, 205);
+            bresenhamWithouDelay(485 + x, 217, 485 + x, 185);
+        }
+        glColor3f(1.0,0.0,1.0);
+        glBegin(GL_POLYGON);
+        glVertex2f(470, 265);
+        glVertex2f(470, 275);
+        glVertex2f(550, 275);
+        glVertex2f(550, 265);
+        glEnd();
+
+         glBegin(GL_POLYGON);
+        glVertex2f(540, 262);
+        glVertex2f(535, 272);
+        glVertex2f(595, 310);
+        glVertex2f(600, 300);
+        glEnd();
+
+         glBegin(GL_POLYGON);
+        glVertex2f(470, 235);
+        glVertex2f(470, 225);
+        glVertex2f(550, 225);
+        glVertex2f(550, 235);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glVertex2f(540, 238);
+        glVertex2f(535, 228);
+        glVertex2f(595, 190);
+        glVertex2f(600, 200);
+        glEnd();
     }
 }
 
@@ -343,7 +493,7 @@ void timer(int value)
     glutTimerFunc(blinkDuration, timer, 0);
 
     drawArrow();
-    if (arrowLevel > 6) 
+    if (arrowLevel > 6)
         drawVerticalArrow();
 }
 void displayElectrons() {
@@ -370,11 +520,11 @@ void displayElectrons() {
         glVertex2f(910.0, 410.0);
         glEnd();
         glFlush();
-        glPointSize(2.0);    
+        glPointSize(2.0);
     }
 }
 void updateArrowLevel(int value)
-{   
+{
     // points over the ellipse to be printed at the end
     if (!arrowUpdatePending) {
         displayElectrons();
@@ -536,7 +686,7 @@ void display() {
     //color heater
     newColor[0] = 0.88; newColor[1] = 0.34; newColor[2] = 0.13;
     bgColor[0] = br;   bgColor[1] = bg; bgColor[2] = bb;
-    floodFill(60, 250, newColor, bgColor);
+    floodFill(56, 250, newColor, bgColor);
     //color electrons
     newColor[0] = 0.0;
     newColor[1] = 1.0;
@@ -560,29 +710,96 @@ void display() {
     newColor[0] = 1.0;
     newColor[1] = 0.65;
     newColor[2] = 0.0;
-    floodFill(680, 290, newColor, bgColor);
-    floodFill(750, 290, newColor, bgColor);
-    floodFill(680, 240, newColor, bgColor);
-    floodFill(760, 240, newColor, bgColor);
-    floodFill(780, 270, newColor, bgColor);
-    floodFill(790, 230, newColor, bgColor);
+    floodFill(673, 290, newColor, bgColor);
+    floodFill(730, 290, newColor, bgColor);
+    floodFill(673, 240, newColor, bgColor);
+    floodFill(730, 240, newColor, bgColor);
+    floodFill(765, 270, newColor, bgColor);
+    floodFill(775, 230, newColor, bgColor);
     glPointSize(2.0);
-    glutTimerFunc(blinkDuration, timer, 0);
-    glutTimerFunc(blinkDuration, updateElapsedTime, 1);
-    glutTimerFunc(2000, updateArrowLevel, 2);
     glFlush();
 }
 
+void displayWave(float x,float y,float h){
+    glColor3f(1.0,1.0,1.0);
+    glBegin(GL_POLYGON);
+    glVertex2i(x-5,y+h+5);
+    glVertex2i(x+185,y+h+5);
+    glVertex2i(x+185,y-h-5);
+    glVertex2i(x-5,y-h-5);
+    glEnd();
+    glFlush();
+    glColor3f(0.0,0.0,0.0);
+    glBegin(GL_LINES);
+    glVertex2i(x-5,y+h+5);
+    glVertex2i(x+185,y+h+5);
+    glVertex2i(x+185,y+h+5);
+    glVertex2i(x+185,y-h-5);
+    glVertex2i(x+185,y-h-5);
+    glVertex2i(x-5,y-h-5);
+    glVertex2i(x-5,y-h-5);
+    glVertex2i(x-5,y+h+5);
+    glEnd();
+    glFlush();
+    glBegin(GL_LINES);
+    glLineWidth(0.5);
+    glVertex2i(x-5,y);
+    glVertex2i(x+185,y);
+    glEnd();
+    glFlush();
+
+    while(true){
+        glColor3f(0.0,1.0,0.5);
+        for(int i=0; i<=180; i++){
+            float temp = sin(((float)i)*3.1415/90);
+            temp*=h;
+            glBegin(GL_POINTS);
+            glVertex2f(x+i,y+temp);
+            glEnd();
+            glFlush();
+            Sleep(delay);
+        }
+        glColor3f(1.0,0.0,0.5);
+        for(int i=0; i<=180; i++){
+            float temp = sin(((float)i)*3.1415/90);
+            temp*=h;
+            glBegin(GL_POINTS);
+            glVertex2f(x+i,y+temp);
+            glEnd();
+            glFlush();
+            Sleep(delay);
+        }
+    }
+}
+
+void menu(int id) {
+    switch (id) {
+    case 1:
+        glutTimerFunc(blinkDuration, timer, 0);
+        glutTimerFunc(blinkDuration, updateElapsedTime, 1);
+        glutTimerFunc(2000, updateArrowLevel, 2);
+        glutAddMenuEntry("Display Screen",2);
+        break;
+    case 2:
+        displayWave(100,60,45);
+        break;
+    default:
+        exit(0);
+    }
+}
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(1100, 500);
+    glutInitWindowSize(1000, 500);
     glutInitWindowPosition(20, 100);
     glutCreateWindow("CRTAnimation");
     glClearColor(br, bg, bb, 0.5);
     glMatrixMode(GL_PROJECTION);
-    gluOrtho2D(0, 1100, 0, 500);
+    gluOrtho2D(0, 1000, 0, 500);
+    glutCreateMenu(menu);
+    glutAddMenuEntry("Start heater", 1);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
     glutDisplayFunc(display);
     glutMainLoop();
     return 0;
